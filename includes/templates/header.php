@@ -10,7 +10,10 @@
 
 <body>
 
-    <header class="header <?php echo isset($inicio) ? 'inicio' : '' ?>"> <!--  el isset solo es para validar si existe la variable y asi no mandar el error en consola -->
+    <!-- <header class="header <?php //echo isset($inicio) ? 'inicio' : '' 
+                                ?>">  el isset solo es para validar si existe la variable y asi no mandar el error en consola -->
+
+    <header class="header <?php echo $inicio ? 'inicio' : '' ?>">
         <div class="contenedor contenido-header">
             <div class="barra">
                 <a href="/">
