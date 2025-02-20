@@ -3,14 +3,65 @@
 require '../../includes/config/database.php';
 $db = conectarDB();
 
+//arreglo con msj de errores
+$errores = [];
 
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    echo "<pre>";
-    var_dump($_POST);
-    echo "</pre>";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // echo "<pre>";
+    // var_dump($_POST);
+    // echo "</pre>";
 
     $titulo = $_POST['titulo'];
     $precio = $_POST['precio'];
+    $descripcion = $_POST['descripcion'];
+    $habitaciones = $_POST['habitaciones'];
+    $wc = $_POST['wc'];
+    $estacionamiento = $_POST['estacionamiento'];
+    $vendedorId = $_POST['vendedor'];
+
+    if (!$titulo) {
+        $errores[] = "Debes añadir un titulo";
+    }
+    if (!$precio) {
+        $errores[] = "Precio obligatorio";
+    }
+
+    if (strlen($descripcion) < 50) {
+        $errores[] = "La descripcion es obligatorio y debe tener mas de 50 caracteres";
+    }
+
+    if (!$habitaciones) {
+        $errores[] = "Las habitaciones obligatorio";
+    }
+
+    if (!$wc) {
+        $errores[] = "Los wc son obligatorios";
+    }
+
+    if (!$estacionamiento) {
+        $errores[] = "Los estacionamientos son obligatorio";
+    }
+
+    if (!$vendedorId) {
+        $errores[] = "Elige un vendedor";
+    }
+
+
+    //revisar si no hay errores
+    if (empty($errores)) {
+        //insertar bd
+        $query = "INSERT INTO propiedades (titulo, precio, descripcion, habitaciones,
+     wc, estacionamiento, vendedores_id) VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones',
+     '$wc', '$estacionamiento', '$vendedorId' )";
+
+        //  echo $query;
+
+        $resultado = mysqli_query($db, $query);
+
+        if ($resultado) {
+            echo "Inserto Correctamente";
+        }
+    }
 }
 
 
@@ -22,6 +73,12 @@ incluirTemplate('header');
     <h1>Crear</h1>
 
     <a href="/admin" class="boton boton-verde">Volver</a>
+
+    <?php foreach ($errores as $error): ?>
+        <div class="alerta error">
+            <?php echo $error ?>
+        </div>
+    <?php endforeach ?>
 
     <form action="" class="formulario" method="POST" action="/admin//propiedades/crear.php">
         <fieldset>
@@ -54,6 +111,7 @@ incluirTemplate('header');
         <fieldset>
             <legend>Vendedor</legend>
             <select name="vendedor">
+                <option value="" disabled selected>--Seleccione--</option>
                 <option value="1">Juan</option>
                 <option value="2">Karen</option>
             </select>
