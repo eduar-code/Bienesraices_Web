@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($resultado) {
             //redireccionar al usuario
-            header('Location: /admin');
+            header('Location: /admin?resultado=1');
         }
     }
 }
