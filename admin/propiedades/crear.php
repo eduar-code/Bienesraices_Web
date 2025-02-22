@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         //generar un nombre unico
         $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
-        //subir la imagen
+        //subir la imagen disk
         move_uploaded_file($imagen['tmp_name'], $carpetaImagenes .$nombreImagen);
 
         //insertar bd
@@ -120,7 +120,8 @@ incluirTemplate('header');
         </div>
     <?php endforeach ?>
 
-    <form action="" class="formulario" method="POST" action="/admin//propiedades/crear.php" enctype="multipart/form-data">
+    <!-- el accion es para que el post se mande en el mismo archivo osea los datos-->
+    <form action="" class="formulario" method="POST" action="/admin/propiedades/crear.php" enctype="multipart/form-data">
         <fieldset>
             <legend>Informacion General</legend>
             <label for="titulo">Titulo:</label>
