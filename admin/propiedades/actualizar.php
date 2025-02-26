@@ -1,5 +1,12 @@
 <?php
 
+require '../../includes/funciones.php';
+$auth = estaAutenticado();
+
+if (!$auth) {
+    header('Location: /');
+}
+
 //validad que sea un id valido
 $id = $_GET['id'];
 $id = filter_var($id, FILTER_VALIDATE_INT);
@@ -112,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
             //subir la imagen disk
             move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
-        }else{
+        } else {
             $nombreImagen = $propiedad['imagen'];
         }
 
@@ -138,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
-require '../../includes/funciones.php';
+
 incluirTemplate('header');
 ?>
 

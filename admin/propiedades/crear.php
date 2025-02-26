@@ -1,5 +1,15 @@
 <?php
 //base de datos
+
+require '../../includes/funciones.php';
+$auth = estaAutenticado();
+
+if (!$auth) {
+    header('Location: /');
+}
+
+
+
 require '../../includes/config/database.php';
 $db = conectarDB();
 
@@ -88,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //generar un nombre unico
         $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
         //subir la imagen disk
-        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes .$nombreImagen);
+        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
 
         //insertar bd
         $query = "INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones,
@@ -105,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
-require '../../includes/funciones.php';
+//require '../../includes/funciones.php';
 incluirTemplate('header');
 ?>
 
